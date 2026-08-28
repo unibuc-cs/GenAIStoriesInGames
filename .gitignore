@@ -1,0 +1,60 @@
+# ============================================================
+# Unreal Engine project - NarrativeContract
+# ============================================================
+
+# --- Secrets / local config -------------------------------
+LLMConfig.ini
+*.local.ini
+.env
+.env.*
+
+# --- Unreal generated directories -------------------------
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+Plugins/**/Binaries/
+Plugins/**/Intermediate/
+
+# Auto-generated developer content workspaces
+Content/Developers/
+Content/Collections/
+
+# --- IDE / editor -----------------------------------------
+.vs/
+.vscode/
+.idea/
+.vsconfig
+*.sln
+*.slnx
+*.suo
+*.user
+*.userprefs
+*.xcodeproj/
+*.xcworkspace/
+.DS_Store
+Thumbs.db
+
+# --- Build artifacts --------------------------------------
+*.obj
+*.pdb
+*.dll
+*.exe
+*.lib
+*.exp
+*.ilk
+*.o
+*.so
+*.dylib
+*.app
+*.ipa
+*.stackdump
+
+# --- Logs / runtime state ---------------------------------
+*.log
+*.tlog
+*.VC.db
+*.VC.opendb
+*.opensdf
+*.sdf

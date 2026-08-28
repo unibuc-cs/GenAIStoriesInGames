@@ -1,0 +1,532 @@
+{
+	"format_version": 1,
+	"story_title": "Dam Breach",
+	"genre": "Disaster",
+	"policy": 1,
+	"proposal_mode": 0,
+	"live_counter": 0,
+	"selected_node": "D4",
+	"versions":
+	{
+		"library": 3,
+		"domain": 5,
+		"manifest": 7,
+		"bible": 2,
+		"graph": 17
+	},
+	"nodes": [
+		{
+			"id": "D1",
+			"title": "Sirens at the dam",
+			"description": "Flood sirens cut through the rain. The spillway gate has not opened, and the reservoir is climbing toward the crest.",
+			"entities": [
+				"player",
+				"dam",
+				"village"
+			],
+			"preconditions": [],
+			"add": [
+				"at(dam)",
+				"alarm(flood_warning)"
+			],
+			"del": [],
+			"choices": [
+				{
+					"id": "c_d1_control",
+					"label": "Climb to the control room",
+					"guard": [],
+					"add": [],
+					"del": [],
+					"target": "D2"
+				},
+				{
+					"id": "c_d1_village",
+					"label": "Head to the village square",
+					"guard": [],
+					"add": [],
+					"del": [],
+					"target": "D3"
+				}
+			],
+			"axes": [
+				0.30000001192092896,
+				0.55000001192092896,
+				0.44999998807907104,
+				0.20000000298023224,
+				0.60000002384185791
+			],
+			"bindings": [
+				"siren ambience, rising water level"
+			],
+			"capabilities": [],
+			"mapping": [],
+			"provenance": [
+				"approved root (Story Bible v2)"
+			],
+			"grounding": 0,
+			"status": 0,
+			"ending": false,
+			"primary_parent": "",
+			"primary_choice": "",
+			"depth": 0,
+			"lane": 1
+		},
+		{
+			"id": "D2",
+			"title": "Control room",
+			"description": "The gate console is dead, but the fault log is legible: the spillway gate is mechanically jammed, and there is a manual release below.",
+			"entities": [],
+			"preconditions": [
+				"at(dam)"
+			],
+			"add": [
+				"access(control_room)",
+				"knows(player, gate_jammed)"
+			],
+			"del": [],
+			"choices": [
+				{
+					"id": "c_d2_release",
+					"label": "Descend to the manual release",
+					"guard": [],
+					"add": [],
+					"del": [],
+					"target": "D4"
+				}
+			],
+			"axes": [
+				0.34999999403953552,
+				0.64999997615814209,
+				0.55000001192092896,
+				0.5,
+				0.69999998807907104
+			],
+			"bindings": [
+				"console interaction, fault log readout"
+			],
+			"capabilities": [],
+			"mapping": [],
+			"provenance": [],
+			"grounding": 0,
+			"status": 0,
+			"ending": false,
+			"primary_parent": "D1",
+			"primary_choice": "c_d1_control",
+			"depth": 1,
+			"lane": 0
+		},
+		{
+			"id": "D3",
+			"title": "Village square",
+			"description": "Families are gathering with what they can carry. Someone has to decide where they go -- and whether anyone gambles on the dam holding.",
+			"entities": [],
+			"preconditions": [
+				"at(dam)"
+			],
+			"add": [
+				"organized(evacuation)"
+			],
+			"del": [],
+			"choices": [
+				{
+					"id": "c_d3_ridge",
+					"label": "Lead everyone to the ridge",
+					"guard": [],
+					"add": [],
+					"del": [],
+					"target": "D5"
+				},
+				{
+					"id": "c_d3_release",
+					"label": "Run for the manual release",
+					"guard": [],
+					"add": [],
+					"del": [],
+					"target": "D4"
+				}
+			],
+			"axes": [
+				0.30000001192092896,
+				0.60000002384185791,
+				0.60000002384185791,
+				0.34999999403953552,
+				0.75
+			],
+			"bindings": [],
+			"capabilities": [
+				"CrowdEvac"
+			],
+			"mapping": [
+				{
+					"capability": "CrowdEvac",
+					"implementation": "BP_EvacRoute"
+				}
+			],
+			"provenance": [],
+			"grounding": 1,
+			"status": 0,
+			"ending": false,
+			"primary_parent": "D1",
+			"primary_choice": "c_d1_village",
+			"depth": 1,
+			"lane": 2
+		},
+		{
+			"id": "D4",
+			"title": "Manual release",
+			"description": "Waist-deep in spray, the release wheel finally gives. The spillway roars open and the reservoir begins to fall.",
+			"entities": [],
+			"preconditions": [
+				"knows(player, gate_jammed)"
+			],
+			"add": [
+				"released(spillway)"
+			],
+			"del": [],
+			"choices": [
+				{
+					"id": "c_d4_saved",
+					"label": "Watch the water fall",
+					"guard": [],
+					"add": [],
+					"del": [],
+					"target": "D6"
+				}
+			],
+			"axes": [
+				0.40000000596046448,
+				0.89999997615814209,
+				0.69999998807907104,
+				0.64999997615814209,
+				0.89999997615814209
+			],
+			"bindings": [],
+			"capabilities": [
+				"ValveInteraction",
+				"FloodSimulation"
+			],
+			"mapping": [
+				{
+					"capability": "ValveInteraction",
+					"implementation": "BP_SpillwayValve"
+				},
+				{
+					"capability": "FloodSimulation",
+					"implementation": "BP_FloodVolume"
+				}
+			],
+			"provenance": [],
+			"grounding": 1,
+			"status": 0,
+			"ending": false,
+			"primary_parent": "D2",
+			"primary_choice": "c_d2_release",
+			"depth": 2,
+			"lane": 0
+		},
+		{
+			"id": "D5",
+			"title": "Ridge evacuation",
+			"description": "From the ridge, the village lights go out one by one under the water. Everyone is alive. Almost nothing else is.",
+			"entities": [],
+			"preconditions": [
+				"organized(evacuation)"
+			],
+			"add": [],
+			"del": [],
+			"choices": [],
+			"axes": [
+				0.25,
+				0.60000002384185791,
+				0.64999997615814209,
+				0.75,
+				0.85000002384185791
+			],
+			"bindings": [],
+			"capabilities": [],
+			"mapping": [],
+			"provenance": [],
+			"grounding": 0,
+			"status": 0,
+			"ending": true,
+			"primary_parent": "D3",
+			"primary_choice": "c_d3_ridge",
+			"depth": 2,
+			"lane": 2
+		},
+		{
+			"id": "D6",
+			"title": "Village saved",
+			"description": "The crest holds a hand's width above the waterline. In the square, the sirens finally stop.",
+			"entities": [],
+			"preconditions": [
+				"released(spillway)"
+			],
+			"add": [],
+			"del": [],
+			"choices": [],
+			"axes": [
+				0.69999998807907104,
+				0.44999998807907104,
+				0.69999998807907104,
+				0.85000002384185791,
+				0.75
+			],
+			"bindings": [],
+			"capabilities": [],
+			"mapping": [],
+			"provenance": [],
+			"grounding": 0,
+			"status": 0,
+			"ending": true,
+			"primary_parent": "D4",
+			"primary_choice": "c_d4_saved",
+			"depth": 3,
+			"lane": 1
+		}
+	],
+	"curves": [
+		{
+			"axis": 0,
+			"prior": [
+				0.30000001192092896,
+				0.20000000298023224,
+				0.30000001192092896,
+				0.44999998807907104,
+				0.64999997615814209
+			],
+			"proposal": [
+				0.30000001192092896,
+				0.20000000298023224,
+				0.30000001192092896,
+				0.44999998807907104,
+				0.64999997615814209
+			],
+			"approved": [
+				0.30000001192092896,
+				0.20000000298023224,
+				0.30000001192092896,
+				0.44999998807907104,
+				0.64999997615814209
+			],
+			"epsilon": 0.20000000298023224
+		},
+		{
+			"axis": 1,
+			"prior": [
+				0.55000001192092896,
+				0.69999998807907104,
+				0.85000002384185791,
+				0.89999997615814209,
+				0.55000001192092896
+			],
+			"proposal": [
+				0.55000001192092896,
+				0.69999998807907104,
+				0.85000002384185791,
+				0.89999997615814209,
+				0.55000001192092896
+			],
+			"approved": [
+				0.55000001192092896,
+				0.69999998807907104,
+				0.85000002384185791,
+				0.89999997615814209,
+				0.55000001192092896
+			],
+			"epsilon": 0.20000000298023224
+		},
+		{
+			"axis": 2,
+			"prior": [
+				0.40000000596046448,
+				0.55000001192092896,
+				0.64999997615814209,
+				0.75,
+				0.69999998807907104
+			],
+			"proposal": [
+				0.40000000596046448,
+				0.55000001192092896,
+				0.64999997615814209,
+				0.75,
+				0.69999998807907104
+			],
+			"approved": [
+				0.40000000596046448,
+				0.55000001192092896,
+				0.64999997615814209,
+				0.75,
+				0.69999998807907104
+			],
+			"epsilon": 0.20000000298023224
+		},
+		{
+			"axis": 3,
+			"prior": [
+				0.20000000298023224,
+				0.40000000596046448,
+				0.55000001192092896,
+				0.69999998807907104,
+				0.85000002384185791
+			],
+			"proposal": [
+				0.20000000298023224,
+				0.40000000596046448,
+				0.55000001192092896,
+				0.69999998807907104,
+				0.85000002384185791
+			],
+			"approved": [
+				0.20000000298023224,
+				0.40000000596046448,
+				0.55000001192092896,
+				0.69999998807907104,
+				0.85000002384185791
+			],
+			"epsilon": 0.20000000298023224
+		},
+		{
+			"axis": 4,
+			"prior": [
+				0.60000002384185791,
+				0.69999998807907104,
+				0.85000002384185791,
+				0.94999998807907104,
+				0.80000001192092896
+			],
+			"proposal": [
+				0.60000002384185791,
+				0.69999998807907104,
+				0.85000002384185791,
+				0.94999998807907104,
+				0.80000001192092896
+			],
+			"approved": [
+				0.60000002384185791,
+				0.69999998807907104,
+				0.85000002384185791,
+				0.94999998807907104,
+				0.80000001192092896
+			],
+			"epsilon": 0.20000000298023224
+		}
+	],
+	"manifest": [
+		{
+			"capability": "FloodSimulation",
+			"implementation": "BP_FloodVolume",
+			"entities": "WaterVolume",
+			"parameters": "rise_rate: 0.2-2 m/min",
+			"evidence": "volume_activated, level_reported",
+			"registered": true
+		},
+		{
+			"capability": "CrowdEvac",
+			"implementation": "BP_EvacRoute",
+			"entities": "Villager, Route",
+			"parameters": "group size: 5-60",
+			"evidence": "route_assigned, arrivals_counted",
+			"registered": true
+		},
+		{
+			"capability": "ValveInteraction",
+			"implementation": "BP_SpillwayValve",
+			"entities": "ValveProp",
+			"parameters": "turn_time: 3-10 s",
+			"evidence": "valve_turned, flow_changed",
+			"registered": true
+		},
+		{
+			"capability": "HelicopterRescue",
+			"implementation": "(none registered)",
+			"entities": "-",
+			"parameters": "-",
+			"evidence": "-",
+			"registered": false
+		}
+	],
+	"episodes": [
+		{
+			"id": "ED1",
+			"title": "Unsupported capability at D5",
+			"class": "Capability",
+			"text": "'A rescue helicopter sweeps the ridge as the valley floods' -- requires HelicopterRescue.",
+			"diagnostic": "HelicopterRescue has no registered implementation in the manifest.",
+			"target": "D5",
+			"gate_valid": false,
+			"profile":
+			{
+				"reversibility": 0,
+				"scope": 0,
+				"meaning": true,
+				"reachability": false,
+				"persistent": false,
+				"new_label": false,
+				"impl": 2
+			},
+			"evidence":
+			{
+				"branch_state": [
+					"at(dam)",
+					"alarm(flood_warning)",
+					"organized(evacuation)"
+				],
+				"affected": [
+					"D5"
+				],
+				"mapping": [
+					"HelicopterRescue -> no registered implementation"
+				],
+				"provenance": [],
+				"alternatives": [
+					"Approve a visible placeholder",
+					"Record an implementation need",
+					"Reject"
+				],
+				"revalidation": []
+			},
+			"options": [
+				{
+					"id": "ED1_placeholder",
+					"label": "Approve visible placeholder",
+					"description": "D5 carries an approved HelicopterRescue placeholder until an implementation is registered.",
+					"action": 2,
+					"recommended": false,
+					"mutations": [
+						{
+							"type": 4,
+							"target": "D5",
+							"a": "",
+							"b": "",
+							"grounding": 2
+						},
+						{
+							"type": 5,
+							"target": "",
+							"a": "HelicopterRescue for D5 ridge finale (owner unassigned)",
+							"b": "",
+							"grounding": 0
+						}
+					]
+				},
+				{
+					"id": "ED1_reject",
+					"label": "Reject the enhancement",
+					"description": "The ridge finale stays as authored.",
+					"action": 6,
+					"recommended": true,
+					"mutations": []
+				}
+			],
+			"route": 1,
+			"resolved_action": 0,
+			"resolved_option": "",
+			"resolved_by": "",
+			"version_after": -1
+		}
+	],
+	"decisions": [],
+	"curve_edits": [],
+	"implementation_needs": []
+}

@@ -1,0 +1,17 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "5.8",
+	"Category": "Research Prototype",
+	"Description": "Proposal-Level Authorization for AI-Assisted Game Authoring - CHI prototype",
+	"Modules": [
+		{
+			"Name": "NarrativeContract",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"CoreUObject"
+			]
+		}
+	]
+}
